@@ -92,7 +92,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MENU</li>
 
-                    <li{{ $page == 'dashboard' ? ' class=active' : '' }}>
+                    <li {{ $page == 'dashboard' ? ' class=active' : '' }}>
                         <a href="{{ route('admin.dashboard') }}">
                             <i class="fa fa-building"></i>
                             <span>Dashboard</span>
@@ -139,19 +139,7 @@
             </section>
         </div>
 
-        {{--  Footer  --}}
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-                Anything you want
-            </div>
-
-            <strong>
-                Created with
-                <i class="fa fa-heart"></i>
-                by
-                <a href="https://laravelfactory.com" target="_blank">Laravel Factory</a>.
-            </strong>
-        </footer>
+       
     </div>
 
     <script src="{{ mix('/js/admin/vendor.js') }}"></script>
