@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Service;
 use App\Http\Controllers\Controller;
 
+use Kreait\Firebase;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
+use Kreait\Firebase\Database;
+
 class ServiceController extends Controller
 {
     /**
@@ -36,6 +41,14 @@ class ServiceController extends Controller
      */
     public function store()
     {
+        $validatedData = request()->validate(Service::validationRules());
+     
+        $factory = (new Factory)->withServiceAccount(__DIR__.'/broken.json');
+        $database = $factory->createDatabase();
+
+        $newID = $database->getReference('services')->push(['name' => request()->name])->getKey();
+     
+        request()->merge([ 'fbID' => $newID ]);
         $validatedData = request()->validate(Service::validationRules());
 
         $service = Service::create($validatedData);
@@ -91,8 +104,12 @@ class ServiceController extends Controller
                 'message' => 'This record cannot be deleted as there are relationship dependencies.'
             ]);
         }
+        $factory = (new Factory)->withServiceAccount(__DIR__.'/broken.json');
+        $database = $factory->createDatabase();
+        $database->getReference('services/'.$service->fbID)->remove();
 
-        $service->delete();
+
+       $service->delete();
 
         return redirect()->route('admin.services.index')->with([
             'type' => 'success',

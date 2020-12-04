@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Provider;
 use App\Service;
 use App\Http\Controllers\Controller;
+use Kreait\Firebase;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
+use Kreait\Firebase\Request\CreateUser;
+use Kreait\Firebase\Database;
 
 class ProviderController extends Controller
 {
@@ -39,6 +44,33 @@ class ProviderController extends Controller
      */
     public function store()
     {
+
+        $factory = (new Factory)->withServiceAccount(__DIR__.'/broken.json');
+        $database = $factory->createDatabase();
+        $auth = $factory->createAuth();
+
+        $newPostID = $database->getReference('providers')->push([
+            'name' => request()->name,
+            'phone' =>  request()->phone,
+            'location' => request()->location,
+            'user_name' => request()->user_name,
+            'password' =>  request()->password,
+            ])->getKey();
+            
+            $request = CreateUser::new()->withUid($newPostID)
+                ->withUnverifiedEmail('user5@example.com')
+                ->withPhoneNumber(request()->phone)
+                ->withClearTextPassword( request()->password)
+                ->withDisplayName(request()->name)
+                ->withPhotoUrl('http://www.example.com/12345678/photo.png');
+            
+             $createdUser = $auth->createUser($request);
+
+
+
+       // dd($newPost);
+        
+        request()->merge(['fbID'=>$newPostID]);
         $validatedData = request()->validate(Provider::validationRules());
 
         $validatedData['password'] = bcrypt($validatedData['password']);
@@ -76,6 +108,7 @@ class ProviderController extends Controller
      */
     public function update(Provider $provider)
     {
+
         $validatedData = request()->validate(
             Provider::validationRules($provider->id)
         );

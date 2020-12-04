@@ -15,7 +15,7 @@ class Provider extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'location', 'user_name', 'password'
+        'name', 'phone', 'location', 'user_name', 'password','fbID'
     ];
 
     /**
@@ -36,6 +36,7 @@ class Provider extends Model
             'name' => 'required|string',
             'phone' => 'required|string',
             'location' => 'required|string',
+            'fbID' => 'nullable|string',
             'user_name' => 'required|string',
             'password' => 'required|string|confirmed',
             'services' => 'required|array',

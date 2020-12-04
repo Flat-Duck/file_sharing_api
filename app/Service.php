@@ -15,7 +15,7 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name','fbID'
     ];
 
     /**
@@ -27,6 +27,7 @@ class Service extends Model
     {
         return [
             'name' => 'required|string',
+            'fbID' => 'nullable|string',
         ];
     }
 

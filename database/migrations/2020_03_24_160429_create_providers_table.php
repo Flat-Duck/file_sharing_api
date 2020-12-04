@@ -20,6 +20,7 @@ class CreateProvidersTable extends Migration
             $table->text('location');
             $table->string('user_name');
             $table->string('password');
+            $table->string('fbID');
             $table->timestamps();
             $table->softDeletes();
         });

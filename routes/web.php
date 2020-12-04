@@ -40,6 +40,8 @@ Route::name('admin.')->prefix('admin')->namespace('Admin')->group(function () {
 
         Route::resource('services', 'ServiceController');
 
+
+        Route::get('/test','FirebaseController@index');
         // Profile
         Route::get('/profile', 'AdminController@profile')->name('profile');
         Route::post('/profile', 'AdminController@profileUpdate');
