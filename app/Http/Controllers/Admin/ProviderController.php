@@ -49,34 +49,37 @@ class ProviderController extends Controller
         $database = $factory->createDatabase();
         $auth = $factory->createAuth();
 
-        $newPostID = $database->getReference('providers')->push([
+        $newPorviderId = $database->getReference('providers')->push([
             'name' => request()->name,
             'phone' =>  request()->phone,
+            'email' =>  request()->email,
             'location' => request()->location,
             'user_name' => request()->user_name,
             'password' =>  request()->password,
             ])->getKey();
             
-            $request = CreateUser::new()->withUid($newPostID)
-                ->withUnverifiedEmail('user5@example.com')
-                ->withPhoneNumber(request()->phone)
-                ->withClearTextPassword( request()->password)
-                ->withDisplayName(request()->name)
-                ->withPhotoUrl('http://www.example.com/12345678/photo.png');
+        $request = CreateUser::new()->withUid($newPorviderId)
+            ->withUnverifiedEmail(request()->email)
+            ->withPhoneNumber(request()->phone)
+            ->withClearTextPassword( request()->password)
+            ->withDisplayName(request()->name)
+            ->withPhotoUrl('http://www.example.com/12345678/photo.png');
             
-             $createdUser = $auth->createUser($request);
+         $createdUser = $auth->createUser($request);
 
-
-
-       // dd($newPost);
         
-        request()->merge(['fbID'=>$newPostID]);
+        request()->merge(['fbID'=>$newPorviderId]);
         $validatedData = request()->validate(Provider::validationRules());
 
         $validatedData['password'] = bcrypt($validatedData['password']);
         unset($validatedData['services']);
         $provider = Provider::create($validatedData);
 
+        foreach (request()->services as $k => $serviceID) {
+            $service = Service::find($serviceID);
+            $database->getReference('provider_service/'.$newPorviderId."/".$service->fbID)->set(true);
+            $database->getReference('service_provider/'.$service->fbID."/" .$newPorviderId)->set(true);
+        }
         $provider->services()->sync(request('services'));
 
         return redirect()->route('admin.providers.index')->with([

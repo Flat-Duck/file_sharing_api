@@ -66,7 +66,7 @@
                         <input type="password"
                             class="form-control"
                             name="password"
-                            required
+                            
                             placeholder="Password"
                             id="password"
                         >
@@ -77,7 +77,7 @@
                         <input type="password"
                             class="form-control"
                             name="password_confirmation"
-                            required
+                            
                             placeholder="Password"
                             id="password-confirmation"
                         >
@@ -87,7 +87,6 @@
                         <label for="services">Service</label>
                         <select class="form-control"
                             name="services[]"
-                            required
                             multiple
                             id="services"
                         >

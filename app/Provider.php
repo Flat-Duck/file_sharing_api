@@ -15,7 +15,7 @@ class Provider extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'location', 'user_name', 'password','fbID'
+        'name', 'phone', 'email', 'location', 'user_name', 'password','fbID'
     ];
 
     /**
@@ -35,12 +35,13 @@ class Provider extends Model
         return [
             'name' => 'required|string',
             'phone' => 'required|string',
+            'email' => 'required|email',
             'location' => 'required|string',
             'fbID' => 'nullable|string',
             'user_name' => 'required|string',
-            'password' => 'required|string|confirmed',
-            'services' => 'required|array',
-            'services.*' => 'required|numeric|exists:services,id',
+            'password' => 'string|confirmed',
+            'services' => 'array',
+            'services.*' => 'numeric|exists:services,id',
         ];
     }
 

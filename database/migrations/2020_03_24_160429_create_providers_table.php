@@ -15,12 +15,13 @@ class CreateProvidersTable extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('phone');
-            $table->text('location');
-            $table->string('user_name');
-            $table->string('password');
-            $table->string('fbID');
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->text('location')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('password')->nullable();
+            $table->string('fbID')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
