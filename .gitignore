@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/app/http/controllers/admin/broken.json
 .env
 .env.backup
 .phpunit.result.cache
