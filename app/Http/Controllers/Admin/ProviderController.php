@@ -57,6 +57,7 @@ class ProviderController extends Controller
             'user_name' => request()->user_name,
             'password' =>  request()->password,
             ])->getKey();
+        $database->getReference('Auth/'.$newPorviderId."/isProvider")->set(true);
             
         $request = CreateUser::new()->withUid($newPorviderId)
             ->withUnverifiedEmail(request()->email)
