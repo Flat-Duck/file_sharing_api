@@ -44,19 +44,49 @@ class ServiceController extends Controller
         $validatedData = request()->validate(Service::validationRules());
      
         $factory = (new Factory)->withServiceAccount(__DIR__.'/broken.json');
+        $storage = $factory->createStorage();
         $database = $factory->createDatabase();
 
         $newID = $database->getReference('services')->push(['name' => request()->name])->getKey();
+
+
+        $image = request()->file('icon'); //image file from frontend
+
+        //$student = app('firebase.firestore')->database()->collection('Student')->document('defT5uT7SDu9K5RFtIdl');
+
+        $firebase_storage_path = 'services/';
+
+        $name = $newID;
+
+        $localfolder = public_path('firebase-temp-uploads') .'/';
+
+        $extension  = $image->getClientOriginalExtension();
+
+        $file = $name. '.' . $extension;
+
+        if ($image->move($localfolder, $file)) {
+            $uploadedfile = fopen($localfolder.$file, 'r');
+
+            $storage->getBucket()->upload($uploadedfile, ['name' => $firebase_storage_path . $file]);
+
+            //will remove from local laravel folder
+            unlink($localfolder . $file);
+
+            echo 'success';
      
-        request()->merge([ 'fbID' => $newID ]);
-        $validatedData = request()->validate(Service::validationRules());
-
-        $service = Service::create($validatedData);
-
-        return redirect()->route('admin.services.index')->with([
-            'type' => 'success',
-            'message' => 'Service added'
-        ]);
+            request()->merge([ 'fbID' => $newID ]);
+            $validatedData = request()->validate(Service::validationRules());
+    
+            $service = Service::create($validatedData);
+    
+            return redirect()->route('admin.services.index')->with([
+                'type' => 'success',
+                'message' => 'Service added'
+            ]);
+        } else {
+            echo 'error';
+        }
+     
     }
 
     /**
@@ -109,7 +139,7 @@ class ServiceController extends Controller
         $database->getReference('services/'.$service->fbID)->remove();
 
 
-       $service->delete();
+        $service->delete();
 
         return redirect()->route('admin.services.index')->with([
             'type' => 'success',

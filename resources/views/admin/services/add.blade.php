@@ -10,7 +10,7 @@
                 <h3 class="box-title">Add New Service</h3>
             </div>
 
-            <form role="form" method="POST" action="{{ route('admin.services.store') }}">
+            <form role="form" method="POST" enctype="multipart/form-data" action="{{ route('admin.services.store') }}">
                 @csrf
 
                 <div class="box-body">
@@ -23,6 +23,16 @@
                             placeholder="Name"
                             value="{{ old('name') }}"
                             id="name"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="icon">Icon</label>
+                        <input type="file"
+                            class="form-control"
+                            name="icon"
+                            placeholder="icon"
+                            value="{{ old('icon') }}"
+                            id="icon"
                         >
                     </div>
                 </div>
