@@ -144,6 +144,15 @@ class ProviderController extends Controller
             ]);
         }
 
+        
+        $factory = (new Factory)->withServiceAccount(__DIR__.'/broken.json');
+        $database = $factory->createDatabase();
+        $auth = $factory->createAuth();
+        
+        $uId = $provider->fbId;
+        $database->getReference('providers/'.$uId)->remove();
+
+        $auth->deleteUser($uId);
         $provider->delete();
 
         return redirect()->route('admin.providers.index')->with([

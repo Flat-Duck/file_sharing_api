@@ -62,7 +62,7 @@ class ServiceController extends Controller
 
         $extension  = $image->getClientOriginalExtension();
 
-        $file = $name. '.' . $extension;
+        $file = $name. '.png';// . $extension;
 
         if ($image->move($localfolder, $file)) {
             $uploadedfile = fopen($localfolder.$file, 'r');
