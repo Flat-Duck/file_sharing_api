@@ -21,9 +21,9 @@
                         <th>Action</th>
                     </tr>
 
-                    @forelse ($services as $service)
+                    @forelse ($services as $k=> $service)
                         <tr>
-                            <td>{{ $service->id }}</td>
+                            <td>{{ $k+1}}</td>
                             <td>{{ $service->name }}</td>
                             <td>
                                 <a href="{{ route('admin.services.edit', ['service' => $service->id]) }}">

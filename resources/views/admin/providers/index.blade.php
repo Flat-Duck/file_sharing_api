@@ -23,9 +23,9 @@
                         <th>Action</th>
                     </tr>
 
-                    @forelse ($providers as $provider)
+                    @forelse ($providers as $k=> $provider)
                         <tr>
-                            <td>{{ $provider->id }}</td>
+                            <td>{{ $k+1}}</td>
                             <td>{{ $provider->name }}</td>
                             <td>{{ $provider->phone }}</td>
                             <td>{{ $provider->user_name }}</td>
