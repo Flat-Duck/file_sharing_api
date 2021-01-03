@@ -60,6 +60,17 @@
                             id="user_name"
                         >
                     </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email"
+                            class="form-control"
+                            name="email"
+                            required
+                            placeholder="User Name"
+                            value="{{ old('email', $provider->email) }}"
+                            id="email"
+                        >
+                    </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -88,8 +99,7 @@
                         <select class="form-control"
                             name="services[]"
                             multiple
-                            id="services"
-                        >
+                            id="services">
                             @foreach ($services as $service)
                                 <option value="{{ $service->id }}"
                                     {{ in_array($service->id, old('services', $provider->services)) ? 'selected' : '' }}
