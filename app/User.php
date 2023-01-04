@@ -5,11 +5,14 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
+    use HasApiTokens ,Notifiable;
+    protected $table = "user";
+    protected $primaryKey = 'user_id';
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -36,4 +39,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     /**
+     * Get the Student for the user.
+     */
+    public function Student()
+    {
+        return $this->hasOne('App\Student','user_id','user_id');
+    }
 }
