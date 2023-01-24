@@ -35,7 +35,9 @@ class HomeController extends ApiController
 
     public function materials(Group $group)
     {
-        $materials =  $group->materials;           
+        $materials = Post::select("*")->whereNull('stu_group')->with('files')->get();
+
+       // $materials =  $group->materials;           
         return $this->sendResponse("Materials Loaded", $materials);
     }
     
