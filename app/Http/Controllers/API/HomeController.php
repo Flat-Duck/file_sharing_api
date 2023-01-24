@@ -44,11 +44,22 @@ class HomeController extends ApiController
         $post->load('files');        
         return $this->sendResponse("Material Loaded", $post);
     }
+    
 
     public function announcements(Group $group)
     {
         $announcements =  $group->announcements;           
         return $this->sendResponse("Announcements Loaded", $announcements);
+    }
+    public function profile()
+    {
+        $student =  request()->user()->student;
+        $data['full_name'] = request()->user()->full_name;
+        $data['specialization'] = $student->stu_specialization;
+        $data['u_img'] = request()->user()->u_img;
+        $data['stu_id'] = $student->stu_id;
+
+        return $this->sendResponse("Profile Loaded", $data);
     }
     
     public function updatePassword()

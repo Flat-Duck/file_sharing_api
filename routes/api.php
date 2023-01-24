@@ -22,6 +22,7 @@ Route::name("api.")->namespace('API')->group(function () {
     Route::post('/login', 'AuthController@login');
     Route::group(['middleware' => ['auth:api']], function () {
 
+        Route::get('profile', 'HomeController@profile');
         Route::get('groups', 'HomeController@groups');
         Route::get('groups/{group}', 'HomeController@group');
         Route::get('groups/{group}/assignments', 'HomeController@assignments');

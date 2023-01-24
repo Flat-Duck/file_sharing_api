@@ -98,20 +98,6 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-
-                    <li {{ $page == 'provider' ? ' class=active' : '' }}>
-                        <a href="{{ route('admin.providers.index') }}">
-                            <i class="fa fa-arrow-right"></i>
-                            <span>Providers</span>
-                        </a>
-                    </li>
-
-                    <li {{ $page == 'service' ? ' class=active' : '' }}>
-                        <a href="{{ route('admin.services.index') }}">
-                            <i class="fa fa-arrow-right"></i>
-                            <span>Services</span>
-                        </a>
-                    </li>
                 </ul>
             </section>
         </aside>
