@@ -9,8 +9,15 @@ class HomeController extends ApiController
 {
     public function groups()
     {
-        $groups =  request()->user()->student->groups;
-        return $this->sendResponse("Groups Loaded", $groups);
+        $student =  request()->user()->student;
+        $profile['full_name'] = request()->user()->full_name;
+        $profile['specialization'] = $student->stu_specialization;
+        $profile['u_img'] = request()->user()->u_img;
+        $profile['stu_id'] = $student->stu_id;         
+        
+        $groups =  $student->groups;
+
+        return $this->sendResponse("Groups Loaded", $groups, $profile);
     }
 
     public function group(Group $group)
@@ -48,9 +55,15 @@ class HomeController extends ApiController
     }
     
 
+    public function announcements_assign(Group $group)
+    {
+        $announcements =  $group->announcements()->where('grade', '!=', NULL)->get();
+        return $this->sendResponse("Announcements Loaded", $announcements);
+    }
+
     public function announcements(Group $group)
     {
-        $announcements =  $group->announcements;           
+        $announcements =  $group->announcements()->where('grade', '=', NULL)->get();
         return $this->sendResponse("Announcements Loaded", $announcements);
     }
     public function profile()

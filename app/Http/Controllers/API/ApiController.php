@@ -9,12 +9,13 @@ class ApiController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendResponse($message, $data, $code = 200)
+    public function sendResponse($message, $data, $profile = null, $code = 200)
     {
     	$response = [
             'success' => true,
             'message' => $message,        
             'data'    => $data,
+            'profile' => $profile,
         
         ];
         return response()->json($response, $code);

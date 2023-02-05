@@ -27,6 +27,7 @@ Route::name("api.")->namespace('API')->group(function () {
         Route::get('groups/{group}', 'HomeController@group');
         Route::get('groups/{group}/assignments', 'HomeController@assignments');
         Route::get('groups/{group}/materials', 'HomeController@materials');
+        Route::get('groups/{group}/announcements_assign', 'HomeController@announcements_assign');
         Route::get('groups/{group}/announcements', 'HomeController@announcements');
         Route::get('assignments/{post}', 'HomeController@assignment');
         Route::get('materials/{post}', 'HomeController@material');
